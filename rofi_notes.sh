@@ -4,8 +4,8 @@ NOTES_FOLDER="$HOME/.notes"
 EDITOR="kitty nvim"
 AUTHOR="Christian Holman"
 
-if [[ ! -a "${NOTES_FOLDER}" ]]; then
-    mkdir NOTES_FOLDER
+if [[ ! -d "${NOTES_FOLDER}" ]]; then
+    mkdir -p "$NOTES_FOLDER"
 fi
 
 get_notes() {
