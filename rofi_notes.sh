@@ -2,7 +2,7 @@
 
 NOTES_FOLDER="$HOME/.notes"
 EDITOR="kitty nvim"
-AUTHOR="Christian Holman>"
+AUTHOR="Christian Holman"
 
 if [[ ! -a "${NOTES_FOLDER}" ]]; then
     mkdir NOTES_FOLDER
