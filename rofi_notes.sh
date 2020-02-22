@@ -9,7 +9,7 @@ if [[ ! -d "${NOTES_FOLDER}" ]]; then
 fi
 
 get_notes() {
-    ls ${NOTES_FOLDER}
+    ls "${NOTES_FOLDER}"
 }
 
 edit_note() {
@@ -37,10 +37,10 @@ note_context() {
     local action=$(echo -e "Edit\nDelete" | rofi -dmenu -p "$note > ")
     case $action in
         "Edit")
-            edit_note $note_location
+            edit_note "$note_location"
             ;;
         "Delete")
-            delete_note $note
+            delete_note "$note"
 
     esac
 }
@@ -67,7 +67,7 @@ END
 
             note_location="$NOTES_FOLDER/$file.md"
             if [ "$title" != "" ]; then
-                echo "$template" > "$note_location" | edit_note $note_location
+                echo "$template" > "$note_location" | edit_note "$note_location"
             fi
             ;;
     esac
@@ -76,17 +76,23 @@ END
 main()
 {
     local all_notes="$(get_notes)"
+    local first_menu="New"
 
-    local note=$(echo -e "New\n${all_notes}"  | rofi -dmenu -p "Note: ")
+    if [ $all_notes ];then
+	first_menu="New\n${all_notes}"
+    fi
 
-    case $note in 
+    local note=$(echo -e "$first_menu"  | rofi -dmenu -p "Note: ")
+    echo $note
+
+    case $note in
         "New")
             new_note
             ;;
         "")
             ;;
         *)
-            note_context $note
+            note_context "$note"
     esac
 }
 
