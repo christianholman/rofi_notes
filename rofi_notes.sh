@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NOTES_FOLDER="$HOME/.notes"
+NOTES_FOLDER="$HOME/.notes_test"
 EDITOR="kitty nvim"
 AUTHOR="Christian Holman"
 
@@ -19,7 +19,7 @@ edit_note() {
 
 delete_note() {
     local note=$1
-    local action=$(echo -e "Yes\nNo" | rofi -dmenu -p "Are you sure you want to delete $note?")
+    local action=$(echo -e "Yes\nNo" | rofi -dmenu -p "Are you sure you want to delete $note? ")
 
     case $action in
         "Yes")
@@ -46,7 +46,7 @@ note_context() {
 }
 
 new_note() {
-    local title=$(echo -e "Cancel" | rofi -dmenu -p "Title: ")
+    local title=$(echo -e "Cancel" | rofi -dmenu -p "Input title: ")
 
     case "$title" in
         "Cancel")
@@ -78,12 +78,11 @@ main()
     local all_notes="$(get_notes)"
     local first_menu="New"
 
-    if [ $all_notes ];then
-	first_menu="New\n${all_notes}"
+    if [ "$all_notes" ];then
+        first_menu="New\n${all_notes}"
     fi
 
     local note=$(echo -e "$first_menu"  | rofi -dmenu -p "Note: ")
-    echo $note
 
     case $note in
         "New")
