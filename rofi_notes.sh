@@ -1,8 +1,17 @@
 #!/bin/bash
 
-NOTES_FOLDER="$HOME/.notes_test"
-EDITOR="kitty nvim"
-AUTHOR="Christian Holman"
+while getopts ":a:e:o:" opt; do
+  case $opt in
+    a) AUTHOR="$OPTARG"
+    ;;
+    e) EDITOR="$OPTARG"
+    ;;
+    o) NOTES_FOLDER="$OPTARG"
+    ;;
+    \?) echo "Invalid option -$OPTARG" >&2
+    ;;
+  esac
+done
 
 if [[ ! -d "${NOTES_FOLDER}" ]]; then
     mkdir -p "$NOTES_FOLDER"

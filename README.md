@@ -2,8 +2,11 @@
 Rono is a simple note manager using rofi to quickly create and view / edit markdown notes.
 
 ## Setup
-To get started, edit the variables ```NOTES_FOLDER```, ```EDITOR```, and ```AUTHOR``` in rofi_notes.sh
-Then you should be good to run the script.
+Run the script with the arguments -a for author, -e for editor command and - o for the notes output folder. 
+e.g 
+
+```rofi_notes.sh -a "Christian Holman" -e "kitty nvim" -o "$HOME/.notes"```
+
 
 ## Screenshots
 ### Notes view
