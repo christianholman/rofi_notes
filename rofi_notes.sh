@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NOTES_FOLDER="$HOME/.notes"
+NOTES_FOLDER="$HOME/.notes_test"
 EDITOR="kitty nvim"
 AUTHOR="Christian Holman"
 
@@ -9,7 +9,7 @@ if [[ ! -d "${NOTES_FOLDER}" ]]; then
 fi
 
 get_notes() {
-    ls ${NOTES_FOLDER}
+    ls "${NOTES_FOLDER}"
 }
 
 edit_note() {
@@ -19,7 +19,7 @@ edit_note() {
 
 delete_note() {
     local note=$1
-    local action=$(echo -e "Yes\nNo" | rofi -dmenu -p "Are you sure you want to delete $note?")
+    local action=$(echo -e "Yes\nNo" | rofi -dmenu -p "Are you sure you want to delete $note? ")
 
     case $action in
         "Yes")
@@ -37,16 +37,16 @@ note_context() {
     local action=$(echo -e "Edit\nDelete" | rofi -dmenu -p "$note > ")
     case $action in
         "Edit")
-            edit_note $note_location
+            edit_note "$note_location"
             ;;
         "Delete")
-            delete_note $note
+            delete_note "$note"
 
     esac
 }
 
 new_note() {
-    local title=$(echo -e "Cancel" | rofi -dmenu -p "Title: ")
+    local title=$(echo -e "Cancel" | rofi -dmenu -p "Input title: ")
 
     case "$title" in
         "Cancel")
@@ -67,7 +67,7 @@ END
 
             note_location="$NOTES_FOLDER/$file.md"
             if [ "$title" != "" ]; then
-                echo "$template" > "$note_location" | edit_note $note_location
+                echo "$template" > "$note_location" | edit_note "$note_location"
             fi
             ;;
     esac
@@ -76,17 +76,22 @@ END
 main()
 {
     local all_notes="$(get_notes)"
+    local first_menu="New"
 
-    local note=$(echo -e "New\n${all_notes}"  | rofi -dmenu -p "Note: ")
+    if [ "$all_notes" ];then
+        first_menu="New\n${all_notes}"
+    fi
 
-    case $note in 
+    local note=$(echo -e "$first_menu"  | rofi -dmenu -p "Note: ")
+
+    case $note in
         "New")
             new_note
             ;;
         "")
             ;;
         *)
-            note_context $note
+            note_context "$note"
     esac
 }
 
